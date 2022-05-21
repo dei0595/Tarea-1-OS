@@ -9,10 +9,10 @@ Semaforo::Semaforo(int valorInicial)
    this->id = semget(KEY, 1, IPC_CREAT | 0666);
    if (this->id < 0) {
       fprintf(stderr, "Could not get semaphore\n");
-      exit(0);
+      // exit(0);
    }
    if (semctl(this->id, 0, SETVAL, sem) < 0) {
-      fprintf(stderr, "Could not create sempahore\n")
+      fprintf(stderr, "Could not create sempahore\n");
    }
 }
 
@@ -35,7 +35,7 @@ void Semaforo::signal()
 
    val = semop(this->id, ops, 1);
    if (val != 0) {
-      fprintf(stderr, "Could not init semaphore\n")
+      fprintf(stderr, "Could not init semaphore\n");
    }
 }
 
@@ -43,7 +43,7 @@ void Semaforo::signal()
 void Semaforo::wait()
 {
    // Utilizar sembuf y semop
-   struct ops[1];
+   struct sembuf ops[1];
    int val;
    ops[0].sem_num = 0;
    ops[0].sem_op = -1;
@@ -53,6 +53,6 @@ void Semaforo::wait()
    if (val == 0) {
 
    } else {
-      
+
    }
 }

@@ -22,7 +22,7 @@ void Buzon::enviar(char* etiqueta, long mid)
     struct msgbuf data;
     data.message_type = mid;
     
-    strncpy(data.message_text, etiqueta);
+    strcpy(data.message_text, etiqueta);
 
     // Enviar el mensaje con msgsnd
     // int msgsnd(int msqid, const void *msgp, size_t msgsz, int msgflg);

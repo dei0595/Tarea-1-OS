@@ -19,7 +19,7 @@ public:
    Buzon();
    void destructor();
    void enviar(char* etiqueta, long mid);
-   void recibir(char* etiqueta, long mid);
+   void recibir(char* etiqueta, int len, long mid);
    
 protected:
    int id;
