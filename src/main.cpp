@@ -37,6 +37,7 @@
 #include <unistd.h>
 #include "Semaforo.h"
 #include "Buzon.h"
+#include <cmath>
 #include <iostream>
 // #include "Buzon.h"
 // #include "Semaforo.h"
@@ -45,60 +46,113 @@ using namespace std;
 
 #define TYPE 1
 
-#define handle_error(msg) \
-    do { perror(msg); exit(EXIT_FAILURE); } while (0)
+// #define handle_error(msg) \
+//     do { perror(msg); exit(EXIT_FAILURE); } while (0)
+
+int openFile(const char* filepath) {
+    // Open File
+    int fd = open(argv[1], O_RDONLY);
+    if (fd == -1) {
+        std::cerr << "File could not open" << std::endl;
+    }
+    return fd;
+}
+
+int getFileSize(int fd, struct stat sb) {
+    // Get file size
+    if (fstat(fd, &sb) == -1) {
+        std::cerr << "File is empty" << std::endl;
+    }
+    return sb.st_size;
+}
 
 int main(int argc, char *argv[])
 {
-    Semaforo sem;
     char *addr;
-    int fd;
+    int fd = openFile(argv[1]);
     struct stat sb;
     off_t offset, pa_offset;
     size_t length;
-    // ssize_t s;
-
-    if (argc < 3 || argc > 4) {
-        fprintf(stderr, "%s file offset [length]\n", argv[0]);
+    ssize_t s;
+    size_t fileSize = getFileSize(fd, sb);
+    double segmentSize;
+    // Get file name from args
+    if (argc < 2) {
+        std::cerr << argv[0] << " [file]" << std::endl;
         exit(EXIT_FAILURE);
     }
 
-    fd = open(argv[1], O_RDONLY);
-    if (fd == -1)
-        handle_error("open");
+    segmentSize = fileSize / (double)3
 
-    if (fstat(fd, &sb) == -1)           /* To obtain file size */
-        handle_error("fstat");
-
-    offset = atoi(argv[2]);
-    pa_offset = offset & ~(sysconf(_SC_PAGE_SIZE) - 1);
-        /* offset for mmap() must be page aligned */
-
-    if (offset >= sb.st_size) {
-        fprintf(stderr, "offset is past end of file\n");
-        exit(EXIT_FAILURE);
+    int p1 = fork();
+    int p2, p3;
+    // Child process
+    if (p1 == 0) {
+        // Create first child
+        double mySegment = floor(segmentSize);
+        int offset = 0;
+        int length = mySegment;
+    } else {
+        p2 = fork();
+        if (p2 == 0) {
+            // Create second child
+            double mySegment = floor(segmentSize);
+            int offset = mySegment;
+            int length = mySegment;
+        } else {
+            p3 = fork();
+            if (p3 == 0) {
+                // Create third child
+                double mySegment = ceil(segmentSize);
+                
+            }
+        }
     }
 
-    if (argc == 4) {
-        length = atoi(argv[3]);
-        if (offset + length > sb.st_size)
-            length = sb.st_size - offset;
-                /* Can't display bytes past end of file */
+    // offset = atoi(argv[2]);
+    // pa_offset = offset & ~(sysconf(_SC_PAGE_SIZE) - 1);
+    //     /* offset for mmap() must be page aligned */
 
-    } else {    /* No length arg ==> display to end of file */
-        length = sb.st_size - offset;
-    }
+    // // Check whether offset 
+    // if (offset >= sb.st_size) {
+    //     std::cerr << "Offset is past end of file" << std::endl;
+    //     exit(EXIT_FAILURE);
+    // }
 
-    addr = static_cast<char*>(mmap(0, sb.st_size , PROT_READ, MAP_SHARED, fd, 0));
+    // if (argc == 4) {
+    //     length = atoi(argv[3]);
+    //     if (offset + length > sb.st_size)
+    //         length = sb.st_size - offset;
+    //             /* Can't display bytes past end of file */
 
-    if (addr == MAP_FAILED)
-        handle_error("mmap");
+    // } else {    /* No length arg ==> display to end of file */
+    //     length = sb.st_size - offset;
+    // }
+    double bytes_assign_file = sb.st_size / (double)3;
+    std::cout << floor(bytes_assign_file) << std::endl;
+    printf("%f", floor(bytes_assign_file) );
 
-    for (off_t i = 0; i < sb.st_size; i++)
+    printf("%f", ceil(bytes_assign_file) );
+
+    
+    addr = static_cast<char*>(mmap(NULL, length + offset - pa_offset, PROT_READ,
+                MAP_PRIVATE, fd, pa_offset));
+    // if (addr == MAP_FAILED)
+    //     handle_error("mmap");
+
+    // s = write(STDOUT_FILENO, addr + offset - pa_offset, length);
+    // if (s != length) {
+    //     if (s == -1)
+    //         handle_error("write");
+
+    //     fprintf(stderr, "partial write");
+    //     exit(EXIT_FAILURE);
+    // }
+    for (off_t i = offset; i < offset + length; i++)
     {
-        if (addr[i] == '\n')
-            printf("Found character %c at %ji\n", addr[i], (intmax_t)i);
+        printf("Found character %c at %ji\n", map[offset], (intmax_t)i);
     }
+
     munmap(addr, length + offset - pa_offset);
     close(fd);
 
