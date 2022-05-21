@@ -25,6 +25,8 @@
 #include <sys/ipc.h>
 #include <sys/msg.h>
 #include <sys/mman.h>
+#include <sys/stat.h>
+#include <sys/mman.h>
 #include <atomic>
 #include <cstring>
 #include <regex>
@@ -32,8 +34,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <fcntl.h>
-#include <sys/stat.h>
-#include <sys/mman.h>
+
 #include <unistd.h>
 #include "Semaforo.h"
 #include "Buzon.h"
@@ -81,7 +82,8 @@ int main(int argc, char *argv[])
         std::cerr << argv[0] << " [file]" << std::endl;
         exit(EXIT_FAILURE);
     }
-
+    addr = static_cast<char*>(mmap(NULL, sb.st_size, PROT_READ,
+                MAP_SHARED, fd, 0));
     segmentSize = fileSize / (double)3
 
     int p1 = fork();
@@ -104,7 +106,8 @@ int main(int argc, char *argv[])
             if (p3 == 0) {
                 // Create third child
                 double mySegment = ceil(segmentSize);
-                
+                int offset = mySegment;
+                int length = mySegment;
             }
         }
     }
@@ -135,8 +138,7 @@ int main(int argc, char *argv[])
     printf("%f", ceil(bytes_assign_file) );
 
     
-    addr = static_cast<char*>(mmap(NULL, length + offset - pa_offset, PROT_READ,
-                MAP_PRIVATE, fd, pa_offset));
+    
     // if (addr == MAP_FAILED)
     //     handle_error("mmap");
 
