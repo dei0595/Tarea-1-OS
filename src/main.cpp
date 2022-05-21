@@ -1,54 +1,31 @@
-#include <iostream>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <iostream>
-#include <sys/types.h>
-#include <sys/ipc.h>
-#include <sys/msg.h>
-#include <errno.h>
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-#include <map>
-#include <string>
-#include <fstream>
-#include <iostream>
-#include <stdio.h>
-#include <cstdlib>
-#include <string.h>
-#include <fstream>
-#include <dirent.h>
-#include <vector>
-#include <unistd.h>
-#include <errno.h>
-#include <sys/wait.h>
-#include <sys/ipc.h>
-#include <sys/msg.h>
-#include <sys/mman.h>
-#include <sys/stat.h>
-#include <sys/mman.h>
 #include <atomic>
-#include <cstring>
-#include <regex>
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdint.h>
-#include <fcntl.h>
-
-#include <unistd.h>
-#include "Semaforo.h"
-#include "Buzon.h"
 #include <cmath>
+#include <cstdlib>
+#include <cstring>
+#include <dirent.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <fstream>
 #include <iostream>
-// #include "Buzon.h"
-// #include "Semaforo.h"
+#include <map>
+#include <regex>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/ipc.h>
+#include <sys/mman.h>
+#include <sys/msg.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+#include <vector>
 
-using namespace std;
+#include "Buzon.h"
+#include "Semaforo.h"
 
 #define TYPE 1
-
-// #define handle_error(msg) \
-//     do { perror(msg); exit(EXIT_FAILURE); } while (0)
 
 int openFile(const char* filepath) {
     // Open File
