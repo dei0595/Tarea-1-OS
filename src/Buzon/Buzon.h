@@ -18,8 +18,8 @@ class Buzon{
 public:
    Buzon();
    void destructor();
-   void enviar(char* mensaje/*, unsigned repeticiones, long mid*/);
-   void recibir(/*char* etiqueta, unsigned& repeticiones, int len, long mid*/);
+   void enviar(char* etiqueta, long mid);
+   void recibir(char* etiqueta, long mid);
    
 protected:
    int id;
@@ -28,7 +28,7 @@ protected:
    struct msgbuf{
       //Ver este enlace para rellenar: https://tldp.org/LDP/lpg/node30.html
       long int message_type;
-      char message_text[100];
+      char message_text[1024];
    };
 };
 
