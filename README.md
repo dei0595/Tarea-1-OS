@@ -14,6 +14,6 @@ El inconveniente con la memoria compartida es que se tiene que crear mecanismos 
 
 ## Para compilar y ejecutar
 
-- Compilar <make>
+- Compilar: make
   
-- Ejecutar <bin/Tarea-1-OS nombre_archivo>
+- Ejecutar: <bin/Tarea-1-OS nombre_archivo>
