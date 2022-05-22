@@ -27,22 +27,7 @@
 
 #define TYPE 1
 
-int openFile(const char* filepath) {
-    // Open File
-    int fd = open(argv[1], O_RDONLY);
-    if (fd == -1) {
-        std::cerr << "File could not open" << std::endl;
-    }
-    return fd;
-}
 
-int getFileSize(int fd, struct stat sb) {
-    // Get file size
-    if (fstat(fd, &sb) == -1) {
-        std::cerr << "File is empty" << std::endl;
-    }
-    return sb.st_size;
-}
 
 int main(int argc, char *argv[])
 {
@@ -61,75 +46,16 @@ int main(int argc, char *argv[])
     }
     addr = static_cast<char*>(mmap(NULL, sb.st_size, PROT_READ,
                 MAP_SHARED, fd, 0));
-    segmentSize = fileSize / (double)3
+    segmentSize = fileSize / (double)3;
+    double floor = floor(segmentSize);
+    int ceil = segmentSize - floor*2;
+    std::vector<int> seg = {floor, ceil};
+    std::cout << seg[0] << std::endl;
+    std::cout << seg[1] << std::endl;
 
-    int p1 = fork();
-    int p2, p3;
-    // Child process
-    if (p1 == 0) {
-        // Create first child
-        double mySegment = floor(segmentSize);
-        int offset = 0;
-        int length = mySegment;
-    } else {
-        p2 = fork();
-        if (p2 == 0) {
-            // Create second child
-            double mySegment = floor(segmentSize);
-            int offset = mySegment;
-            int length = mySegment;
-        } else {
-            p3 = fork();
-            if (p3 == 0) {
-                // Create third child
-                double mySegment = ceil(segmentSize);
-                int offset = mySegment;
-                int length = mySegment;
-            }
-        }
-    }
-
-    // offset = atoi(argv[2]);
-    // pa_offset = offset & ~(sysconf(_SC_PAGE_SIZE) - 1);
-    //     /* offset for mmap() must be page aligned */
-
-    // // Check whether offset 
-    // if (offset >= sb.st_size) {
-    //     std::cerr << "Offset is past end of file" << std::endl;
-    //     exit(EXIT_FAILURE);
-    // }
-
-    // if (argc == 4) {
-    //     length = atoi(argv[3]);
-    //     if (offset + length > sb.st_size)
-    //         length = sb.st_size - offset;
-    //             /* Can't display bytes past end of file */
-
-    // } else {    /* No length arg ==> display to end of file */
-    //     length = sb.st_size - offset;
-    // }
-    double bytes_assign_file = sb.st_size / (double)3;
-    std::cout << floor(bytes_assign_file) << std::endl;
-    printf("%f", floor(bytes_assign_file) );
-
-    printf("%f", ceil(bytes_assign_file) );
-
-    
-    
-    // if (addr == MAP_FAILED)
-    //     handle_error("mmap");
-
-    // s = write(STDOUT_FILENO, addr + offset - pa_offset, length);
-    // if (s != length) {
-    //     if (s == -1)
-    //         handle_error("write");
-
-    //     fprintf(stderr, "partial write");
-    //     exit(EXIT_FAILURE);
-    // }
     for (off_t i = offset; i < offset + length; i++)
     {
-        printf("Found character %c at %ji\n", map[offset], (intmax_t)i);
+        printf("Found character %c at %ji\n", addr[offset], (intmax_t)i);
     }
 
     munmap(addr, length + offset - pa_offset);
