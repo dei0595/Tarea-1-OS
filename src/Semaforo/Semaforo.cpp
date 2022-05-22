@@ -6,7 +6,7 @@ Semaforo::Semaforo(int valorInicial)
    // Crear semáforo con semget
    union semun sem;
    sem.val = valorInicial;
-   this->id = semget(KEY, 1, IPC_CREAT | 0666);
+   this->id = semget(KEY2, 1, IPC_CREAT | 0666);
    if (this->id < 0) {
       fprintf(stderr, "Could not get semaphore\n");
       // exit(0);
@@ -20,7 +20,7 @@ Semaforo::Semaforo(int valorInicial)
 void Semaforo::destructor()
 {
    // Eliminar semáforo con semctl
-   semctl(id, 0, IPC_RMID);
+   semctl(this->id, 0, IPC_RMID);
 }
 
 // Método encargado de poner el semáforo en verde.
@@ -51,7 +51,7 @@ void Semaforo::wait()
 
    val = semop(this->id, ops, 1);
    if (val == 0) {
-
+      // std::cout << "Semaforo espera" << std::endl;
    } else {
 
    }

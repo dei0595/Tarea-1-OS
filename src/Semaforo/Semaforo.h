@@ -1,6 +1,7 @@
 #ifndef SEMAFORO_H
 #define SEMAFORO_H
 
+#include <iostream>
 #include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/sem.h>
@@ -8,7 +9,7 @@
 #include <stdio.h>
 
 // Constante que almacena el de carné.
-#define KEY 0xB00000
+#define KEY2 0xB30286
 
 // Clase encargada de informar a un proceso cuándo continuar su operación.
 class Semaforo{

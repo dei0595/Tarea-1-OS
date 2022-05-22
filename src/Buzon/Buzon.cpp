@@ -23,6 +23,7 @@ void Buzon::enviar(char* etiqueta, long mid)
     data.message_type = mid;
     
     strcpy(data.message_text, etiqueta);
+    // std::cout << "Message sent..." << std::endl;
 
     // Enviar el mensaje con msgsnd
     // int msgsnd(int msqid, const void *msgp, size_t msgsz, int msgflg);
@@ -41,7 +42,7 @@ void Buzon::recibir(char* etiqueta, int len, long mid)
     // Recibir el mensaje con msgrcv
     // ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg);
     msgrcv(this->id, (void*)&data, len, mid, 0);
-    std::cout << "Data received: " << data.message_text << std::endl;
+    // std::cout << "Data received: " << data.message_text << std::endl;
     // Sacar el mensaje del buzón. Sugerencia: strcpy
     strcpy(etiqueta, data.message_text);
 }

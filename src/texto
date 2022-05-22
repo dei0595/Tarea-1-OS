@@ -1,3 +1,20 @@
-Hola mi nombre es Sam Cheang y
-este documento tiene 3
-lineas y varias palabras
+La tercera edición de este libro difiere de la segunda en muchos aspectos. Para empezar, reordenamos los capítulos para colocar el material central al principio. También pusimos mayor énfasis en
+el sistema operativo como el creador de las abstracciones. El capítulo 1, se ha actualizado en forma
+considerable y ofrece una introducción de todos los conceptos; el capítulo 2 trata sobre la abstracción de la CPU en varios procesos; el 3 aborda la abstracción de la memoria física en espacios de
+direcciones (memoria virtual); el 4 versa sobre la abstracción del disco en archivos. En conjunto,
+los procesos, espacios de direcciones virtuales y archivos son los conceptos clave que proporcionan
+los sistemas operativos, y es la razón por la que hayamos colocado los capítulos correspondientes
+antes de lo establecido en la edición anterior.
+El capítulo 1 se modificó y actualizó de manera considerable. Por ejemplo, ahora proporciona
+una introducción al lenguaje de programación C y al modelo de C en tiempo de ejecución para los
+lectores que están familiarizados sólo con Java.
+En el capítulo 2, el análisis de los hilos (threads) se modificó y expandió para reflejar su nueva importancia. Entre otras cosas, ahora hay una sección acerca de los hilos Pthreads del estándar
+de IEEE.
+El capítulo 3, sobre la administración de memoria, se reorganizó para poner énfasis en la idea
+de que una de las funciones clave de un sistema operativo es proporcionar la abstracción de un espacio de direcciones virtuales para cada proceso. Se eliminó el material que trata de la administración de memoria en los sistemas de procesamiento por lotes, y se actualizó el referente a la
+implementación de la paginación, con el fin de destacar la necesidad de administrar espacios de direcciones más extensos (ahora muy comunes) y de ofrecer una mayor velocidad.
+
+
+
+
+                      3
