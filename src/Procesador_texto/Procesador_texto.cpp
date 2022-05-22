@@ -53,9 +53,14 @@ void Procesador_texto::cuentaCaracteresLineas(int start, int finish) {
             if (static_cast<int>(this->archivo_compartido[caracter]) < 0) {
                 caracter++;
             }
-            // std::cout << static_cast<int>(this->archivo_compartido[caracter]) << " ";            
+            // std::cout << this->archivo_compartido[caracter] << " ";            
         }
-        if (this->archivo_compartido[caracter] == '\n' || caracter == this->tamanioArchivo-1) {    
+        if (this->archivo_compartido[caracter] == '\n' || caracter == this->tamanioArchivo-1 ) {    
+            lineas++;
+        }
+        if (caracter == this->tamanioArchivo-1 && this->archivo_compartido[caracter-1] == '\n' && this->archivo_compartido[caracter] == '\n') {
+            lineas++;
+        } else if (caracter == this->tamanioArchivo-1 && this->archivo_compartido[caracter] == '\n'){
             lineas++;
         }
     }
@@ -109,6 +114,7 @@ void Procesador_texto::procesarTexto() {
         if ((pid = fork()) == 0) {
             int start = i_proceso*floor(this->tamanioArchivo/cant_procesos) + std::min<int>(i_proceso, this->tamanioArchivo%cant_procesos);
             int finish = (i_proceso+1)*floor(this->tamanioArchivo/cant_procesos) + std::min<int>((i_proceso+1), this->tamanioArchivo%cant_procesos);
+            // std::cout << "Start " << start << " Finish " << finish << std::endl;
             cuentaCaracteresLineas(start, finish);
             exit(1);
         }

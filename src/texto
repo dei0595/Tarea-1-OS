@@ -14,7 +14,7 @@ El capítulo 3, sobre la administración de memoria, se reorganizó para poner �
 de que una de las funciones clave de un sistema operativo es proporcionar la abstracción de un espacio de direcciones virtuales para cada proceso. Se eliminó el material que trata de la administración de memoria en los sistemas de procesamiento por lotes, y se actualizó el referente a la
 implementación de la paginación, con el fin de destacar la necesidad de administrar espacios de direcciones más extensos (ahora muy comunes) y de ofrecer una mayor velocidad.
 
+1234132         
+3298
 
 
-
-                      3
